@@ -21,7 +21,7 @@ Combined with many **Included CSS3 animations** AOE aims to provice the fastest 
 - [License](#license)
 
 # Install
-Make sure to **include bothaoe.js and aoe.css**
+Make sure to **include both aoe.js and aoe.css**
 ```html
 <link rel="stylesheet" href="dist/aoe.css">
 ```
