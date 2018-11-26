@@ -86,7 +86,7 @@ $size: 100px;
 @keyframes hitLeft {
 	0% {
 		animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-		transform: translateX(0);
+		transform: translateX(-#{$size});
 	}
 
 	40% {
@@ -109,7 +109,7 @@ $size: 100px;
 	0% {
 		opacity: 1;
 		animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-		transform: translateX(0);
+		transform: translateX(#{$size});
 	}
 
 	40% {
