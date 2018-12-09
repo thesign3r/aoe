@@ -1,18 +1,23 @@
-$duration: 0.8s;
-$size: 100px;
-
+$animationDuration: 0.8s;
+$animationSize: 100px;
 
 [data-aoe] {
-	animation-duration: .8s;
+	animation-duration: $animationDuration;
 	animation-fill-mode: forwards;
 	opacity: 0;
 }
 
 @mixin disableIE {
 	[data-aoe] {
-		opacity: 1!important;
-		animation: none!important;
+		opacity: 1 !important;
+		animation: none !important;
 	}
+}
+
+_::-webkit-full-page-media,
+_:future,
+:root {
+	@include disableIE();
 }
 
 @media screen\0 {
@@ -86,7 +91,7 @@ $size: 100px;
 @keyframes hitLeft {
 	0% {
 		animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-		transform: translateX(-#{$size});
+		transform: translateX(-#{$animationSize});
 	}
 
 	40% {
@@ -109,7 +114,7 @@ $size: 100px;
 	0% {
 		opacity: 1;
 		animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-		transform: translateX(#{$size});
+		transform: translateX(#{$animationSize});
 	}
 
 	40% {
@@ -353,7 +358,7 @@ $size: 100px;
 @keyframes rollIn {
 	0% {
 		animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		transform: translateY(#{$size}) rotate(-445deg);
+		transform: translateY(#{$animationSize}) rotate(-445deg);
 	}
 
 	30% {
@@ -412,7 +417,7 @@ $size: 100px;
 
 @keyframes popInLeft {
 	0% {
-		transform: translate3d(-#{$size}, 0, 0) scale3d(0.1, 0.1, 0.1);
+		transform: translate3d(-#{$animationSize}, 0, 0) scale3d(0.1, 0.1, 0.1);
 	}
 
 	40% {
@@ -444,7 +449,7 @@ $size: 100px;
 
 @keyframes popInRight {
 	0% {
-		transform: translate3d(#{$size}, 0, 0) scale3d(0.1, 0.1, 0.1);
+		transform: translate3d(#{$animationSize}, 0, 0) scale3d(0.1, 0.1, 0.1);
 	}
 
 	40% {
@@ -476,7 +481,7 @@ $size: 100px;
 
 @keyframes popInTop {
 	0% {
-		transform: translate3d(0, -#{$size}, 0) scale3d(0.1, 0.1, 0.1);
+		transform: translate3d(0, -#{$animationSize}, 0) scale3d(0.1, 0.1, 0.1);
 	}
 
 	40% {
@@ -508,7 +513,7 @@ $size: 100px;
 
 @keyframes popInBottom {
 	0% {
-		transform: translate3d(0, #{$size}, 0) scale3d(0.1, 0.1, 0.1);
+		transform: translate3d(0, #{$animationSize}, 0) scale3d(0.1, 0.1, 0.1);
 	}
 
 	40% {
@@ -541,19 +546,19 @@ $size: 100px;
 
 @keyframes flip {
 	from {
-		transform: perspective(#{$size}) rotateY(-360deg) scale3d(1, 1, 1);
+		transform: perspective(#{$animationSize}) rotateY(-360deg) scale3d(1, 1, 1);
 		animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	50% {
 		opacity: 1;
-		transform: perspective(#{$size}) rotateY(-180deg) scale3d(1.2, 1.2, 1.2);
+		transform: perspective(#{$animationSize}) rotateY(-180deg) scale3d(1.2, 1.2, 1.2);
 		animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	}
 
 	to {
 		opacity: 1;
-		transform: perspective(#{$size}) rotateY(0deg) scale3d(1, 1, 1);
+		transform: perspective(#{$animationSize}) rotateY(0deg) scale3d(1, 1, 1);
 		animation-timing-function: cubic-bezier(0.95, 0.05, 0.795, 0.035);
 	}
 }
@@ -565,24 +570,23 @@ $size: 100px;
 
 @keyframes flipInX {
 	from {
-		transform: perspective(#{$size}) rotateX(90deg) scale3d(1.2, 1.2, 1.2);
+		transform: perspective(800px) rotateX(90deg) scale3d(1.2, 1.2, 1.2);
 	}
 
 	50% {
 		opacity: 1;
 		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-		transform: perspective(#{$size}) rotateX(-20deg) scale3d(1, 1, 1);
+		transform: perspective(800px) rotateX(-20deg) scale3d(1, 1, 1);
 	}
 
 	to {
 		opacity: 1;
-		transform: perspective(#{$size}) rotateX(0deg) scale3d(1, 1, 1);
+		transform: perspective(800px) rotateX(0deg) scale3d(1, 1, 1);
 	}
 }
 
 .flipInY {
 	animation-name: flipInY;
-
 }
 
 @keyframes flipInY {
@@ -625,7 +629,7 @@ $size: 100px;
 
 @keyframes fadeInRight {
 	0% {
-		transform: translate3d(#{$size}, 0, 0);
+		transform: translate3d(#{$animationSize}, 0, 0);
 		opacity: 0;
 	}
 
@@ -642,7 +646,7 @@ $size: 100px;
 
 @keyframes fadeInLeft {
 	0% {
-		transform: translate3d(-#{$size}, 0, 0);
+		transform: translate3d(-#{$animationSize}, 0, 0);
 		opacity: 0;
 	}
 
@@ -659,7 +663,7 @@ $size: 100px;
 
 @keyframes fadeInTop {
 	0% {
-		transform: translate3d(0, -#{$size}, 0);
+		transform: translate3d(0, -#{$animationSize}, 0);
 		opacity: 0;
 	}
 
@@ -680,7 +684,7 @@ $size: 100px;
 
 @keyframes fadeInBottom {
 	0% {
-		transform: translate3d(0, #{$size}, 0);
+		transform: translate3d(0, #{$animationSize}, 0);
 		opacity: 0;
 	}
 
@@ -701,7 +705,7 @@ $size: 100px;
 @keyframes driveInLeft {
 	0% {
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: translate3d(-#{$size}, 0, 0);
+		transform: translate3d(-#{$animationSize}, 0, 0);
 	}
 
 	30% {
@@ -728,7 +732,7 @@ $size: 100px;
 @keyframes driveInRight {
 	0% {
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: translate3d(#{$size}, 0, 0);
+		transform: translate3d(#{$animationSize}, 0, 0);
 	}
 
 	30% {
@@ -758,7 +762,7 @@ $size: 100px;
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 
 
-		transform: translate3d(0, -#{$size}, 0);
+		transform: translate3d(0, -#{$animationSize}, 0);
 	}
 
 	30% {
@@ -785,7 +789,7 @@ $size: 100px;
 @keyframes driveInBottom {
 	0% {
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: translate3d(0, #{$size}, 0);
+		transform: translate3d(0, #{$animationSize}, 0);
 	}
 
 	30% {
@@ -878,7 +882,7 @@ $size: 100px;
 @keyframes swoopInLeft {
 	0% {
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: scaleX(1.5) translate3d(-#{$size}, 0, 0);
+		transform: scaleX(1.5) translate3d(-#{$animationSize}, 0, 0);
 	}
 
 	40% {
@@ -907,7 +911,7 @@ $size: 100px;
 @keyframes swoopInRight {
 	0% {
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: scaleX(1.5) translate3d(#{$size}, 0, 0);
+		transform: scaleX(1.5) translate3d(#{$animationSize}, 0, 0);
 	}
 
 	40% {
@@ -936,7 +940,7 @@ $size: 100px;
 @keyframes swoopInTop {
 	0% {
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: scaleY(1.5) translate3d(0, -#{$size}, 0);
+		transform: scaleY(1.5) translate3d(0, -#{$animationSize}, 0);
 	}
 
 	40% {
@@ -1081,7 +1085,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		transform: translateX(-#{$size}) rotate(-445deg);
+		transform: translateX(-#{$animationSize}) rotate(-445deg);
 	}
 }
 
@@ -1104,7 +1108,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		transform: translateX(#{$size}) rotate(445deg);
+		transform: translateX(#{$animationSize}) rotate(445deg);
 	}
 }
 
@@ -1127,7 +1131,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		transform: translateY(-#{$size}) rotate(445deg);
+		transform: translateY(-#{$animationSize}) rotate(445deg);
 	}
 }
 
@@ -1150,7 +1154,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		transform: translateY(#{$size}) rotate(-445deg);
+		transform: translateY(#{$animationSize}) rotate(-445deg);
 	}
 }
 
@@ -1200,7 +1204,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
-		transform: scale3d(0.5, 0.5, 0.5) translate3d(-#{$size}, 0, 0);
+		transform: scale3d(0.5, 0.5, 0.5) translate3d(-#{$animationSize}, 0, 0);
 	}
 }
 
@@ -1224,7 +1228,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
-		transform: scale3d(0.5, 0.5, 0.5) translate3d(#{$size}, 0, 0);
+		transform: scale3d(0.5, 0.5, 0.5) translate3d(#{$animationSize}, 0, 0);
 	}
 }
 
@@ -1248,7 +1252,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
-		transform: scale3d(0.5, 0.5, 0.5) translate3d(0, -#{$size}, 0);
+		transform: scale3d(0.5, 0.5, 0.5) translate3d(0, -#{$animationSize}, 0);
 	}
 }
 
@@ -1272,7 +1276,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
-		transform: scale3d(0.5, 0.5, 0.5) translate3d(0, #{$size}, 0);
+		transform: scale3d(0.5, 0.5, 0.5) translate3d(0, #{$animationSize}, 0);
 	}
 }
 
@@ -1282,16 +1286,16 @@ $size: 100px;
 
 @keyframes flipOutX {
 	from {
-		transform: perspective(#{$size}) rotateX(0deg) scale3d(1, 1, 1);
+		transform: perspective(#{$animationSize}) rotateX(0deg) scale3d(1, 1, 1);
 	}
 	60% {
 		opacity: 1;
 		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-		transform: perspective(#{$size}) rotateX(-30deg) scale3d(1, 1, 1);
+		transform: perspective(#{$animationSize}) rotateX(-30deg) scale3d(1, 1, 1);
 	}
 	to {
 		opacity: 0;
-		transform: perspective(#{$size}) rotateX(90deg) scale3d(1.2, 1.2, 1.2);
+		transform: perspective(#{$animationSize}) rotateX(90deg) scale3d(1.2, 1.2, 1.2);
 	}
 }
 
@@ -1302,16 +1306,16 @@ $size: 100px;
 
 @keyframes flipOutY {
 	from {
-		transform: perspective(#{$size}) rotateY(0deg) scale3d(1, 1, 1);
+		transform: perspective(#{$animationSize}) rotateY(0deg) scale3d(1, 1, 1);
 	}
 	60% {
 		opacity: 1;
 		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-		transform: perspective(#{$size}) rotateY(-30deg) scale3d(1, 1, 1);
+		transform: perspective(#{$animationSize}) rotateY(-30deg) scale3d(1, 1, 1);
 	}
 	to {
 		opacity: 0;
-		transform: perspective(#{$size}) rotateY(90deg) scale3d(1.2, 1.2, 1.2);
+		transform: perspective(#{$animationSize}) rotateY(90deg) scale3d(1.2, 1.2, 1.2);
 	}
 }
 
@@ -1341,7 +1345,7 @@ $size: 100px;
 		opacity: 1;
 	}
 	100% {
-		transform: translate3d(-#{$size}, 0, 0);
+		transform: translate3d(-#{$animationSize}, 0, 0);
 		opacity: 0;
 	}
 }
@@ -1357,7 +1361,7 @@ $size: 100px;
 		opacity: 1;
 	}
 	100% {
-		transform: translate3d(#{$size}, 0, 0);
+		transform: translate3d(#{$animationSize}, 0, 0);
 		opacity: 0;
 	}
 }
@@ -1376,7 +1380,7 @@ $size: 100px;
 		opacity: 0.2;
 	}
 	100% {
-		transform: translate3d(0, -#{$size}, 0);
+		transform: translate3d(0, -#{$animationSize}, 0);
 		opacity: 0;
 	}
 }
@@ -1395,7 +1399,7 @@ $size: 100px;
 		opacity: 0.2;
 	}
 	100% {
-		transform: translate3d(0, #{$size}, 0);
+		transform: translate3d(0, #{$animationSize}, 0);
 		opacity: 0;
 	}
 }
@@ -1421,7 +1425,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-		transform: translate3d(-#{$size}, 0, 0);
+		transform: translate3d(-#{$animationSize}, 0, 0);
 	}
 }
 
@@ -1445,7 +1449,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-		transform: translate3d(#{$size}, 0, 0);
+		transform: translate3d(#{$animationSize}, 0, 0);
 	}
 }
 
@@ -1469,7 +1473,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-		transform: translate3d(0, -#{$size}, 0);
+		transform: translate3d(0, -#{$animationSize}, 0);
 	}
 }
 
@@ -1493,7 +1497,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-		transform: translate3d(0, #{$size}, 0);
+		transform: translate3d(0, #{$animationSize}, 0);
 	}
 }
 
@@ -1546,7 +1550,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: scaleX(1.5) translate3d(-#{$size}, 0, 0);
+		transform: scaleX(1.5) translate3d(-#{$animationSize}, 0, 0);
 	}
 }
 
@@ -1571,7 +1575,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: scaleX(1.5) translate3d(#{$size}, 0, 0);
+		transform: scaleX(1.5) translate3d(#{$animationSize}, 0, 0);
 	}
 }
 
@@ -1596,7 +1600,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: scaleY(1.5) translate3d(0, -#{$size}, 0);
+		transform: scaleY(1.5) translate3d(0, -#{$animationSize}, 0);
 	}
 }
 
@@ -1621,7 +1625,7 @@ $size: 100px;
 	100% {
 		opacity: 0;
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: scaleY(1.5) translate3d(0, #{$size}, 0);
+		transform: scaleY(1.5) translate3d(0, #{$animationSize}, 0);
 	}
 }
 
