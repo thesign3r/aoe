@@ -1,7 +1,8 @@
 /**
  * @project        AOE
  * 
- * @description    "Animate On entrance (AOE) is a lightweight, dependency free, insanely fast scroll animation library built on top of Intersection Observer API",
+ * @description    "Animate On entrance (AOE) is a lightweight, dependency free, insanely fast scroll 
+ * animation library built on top of Intersection Observer API",
  * @author         Michał Gwóźdź - thesigner
  * @version        0.1
  */
@@ -18,12 +19,13 @@ let options = {
 	rootMargin: "0px",
 	once: false,
 	speed: null,
+	timing: null,
 	delay: null,
 	transitions: false,
 	disabled: false,
 	mutationsListener: null,
 };
-let items = document.querySelectorAll(options.selectors.main);
+let items;
 
 let observer;
 let mutations;
@@ -37,11 +39,12 @@ let delay;
  */
 const aoe = (settings) => {
 	if (settings && settings !== options) {
-		options = { // idk what it does but that line is very cool
+		options = { // i know what it does now
 			...options,
 			...settings,
 		};
 	}
+	items = document.querySelectorAll(options.selectors.main);
 
 	// Create mutation observer if enabled
 	// Useful for keeping track of new added nodes (eg. idk, livechat);
@@ -52,19 +55,20 @@ const aoe = (settings) => {
 	// Create IntersectionObserver instance for each node
 	// Set css properties if passed in serrings
 	items.forEach((item) => {
-		if (item.getAttribute(options.selectors.name)) {
-			createIntersection(item);
-		}
 		speed = (options.speed !== null) ? options.speed + ms : item.getAttribute(options.selectors.speed) + ms;
 		delay = (options.delay !== null) ? options.delay + ms : item.getAttribute(options.selectors.delay) + ms;
+		item.style.animationDuration = speed;
+		item.style.animationDelay = delay;
+
+		createIntersection(item);
 
 		if (options.transitions == true) {
 			item.style.transitionDuration = speed;
 			item.style.transitionDelay = delay;
 		}
-
-		item.style.animationDuration = speed;
-		item.style.animationDelay = delay;
+		if (options.timing !== null) {
+			item.style.animationTimingFunction = options.timing;
+		}
 	});
 };
 
@@ -89,7 +93,7 @@ const createIntersection = (item) => {
  * @param {Node} items 
  * @param {IntersectionObserver} observer 
  */
-const handleIntersect = (items, observer) => {
+const handleIntersect = (items) => { // (items, observer) => @todo consider using threshold so large elements can appear earlier
 	items.forEach((item) => {
 		let animation = item.target.getAttribute(options.selectors.name);
 
