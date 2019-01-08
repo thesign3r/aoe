@@ -14,17 +14,11 @@ $animationSize: 100px;
 	}
 }
 
-_::-webkit-full-page-media,
-_:future,
-:root {
+.safari {
 	@include disableIE();
 }
 
-@media screen\0 {
-	@include disableIE();
-}
-
-@media screen\9 {
+@media screen and (max-width: 1023px) {
 	@include disableIE();
 }
 
