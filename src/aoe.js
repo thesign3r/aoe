@@ -7,7 +7,6 @@
  * @version        0.1
  */
 
-
 let options = {
 	selectors: {
 		name: 'data-aoe',
@@ -24,9 +23,10 @@ let options = {
 	transitions: false,
 	disabled: false,
 	mutationsListener: null,
+	callback: null,
 };
-let items;
 
+let items;
 let observer;
 let mutations;
 let ms = 'ms';
@@ -39,7 +39,7 @@ let delay;
  */
 const aoe = (settings) => {
 	if (settings && settings !== options) {
-		options = { // i know what it does now
+		options = {
 			...options,
 			...settings,
 		};
@@ -72,7 +72,6 @@ const aoe = (settings) => {
 	});
 };
 
-
 /**
  * Creates Intersection Observer instance on node
  * @param {Node} listener 
@@ -96,6 +95,11 @@ const createIntersection = (item) => {
 const handleIntersect = (items) => { // (items, observer) => @todo consider using threshold so large elements can appear earlier
 	items.forEach((item) => {
 		let animation = item.target.getAttribute(options.selectors.name);
+
+		if (options.callback !== null) {
+			var call = options.callback;
+			call(item);
+		}
 
 		if (item.isIntersecting == true && options.disabled == false) {
 			item.target.classList.add(animation);

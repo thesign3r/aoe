@@ -74,6 +74,7 @@ aoe({
 | `mutationsListener` | Node | This element (html wrapper) can listen for new elements with `data-aoe` attribute and automatically register new Intersection Observer on them. | `null` |
 | `disabled` | Boolean | Disables **AOE.** | `false` |
 | `selectors` | Object | Changes **AOE** selector. See [src/aoe.js #12](https://github.com/thesign3r/aoe/blob/master/src/aoe.js). | `false` |
+| `callback` | Function | Calls desired function when element enters/leaves viewport | `null` |
 
 
 
