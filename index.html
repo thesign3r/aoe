@@ -19,11 +19,23 @@
 			align-items: center;
 			justify-content: center;
 		}
+
+		.NONEXISTANT {
+			opacity: 1 !important;
+		}
 	</style>
 </head>
 
 <body>
 	<script src="src/aoe.js"></script>
+	<div class="box"></div>
+	<div class="box"></div>
+	<div class="box"></div>
+	<div class="box"></div>
+	<div class="box NONEXISTANT" data-aoe="NONEXISTANT-FAKE">swoopInTop</div>
+	<div class="box"></div>
+	<div class="box"></div>
+	<div class="box"></div>
 	<script>
 		var animations = [
 			'fake',
@@ -60,7 +72,7 @@
 			'rollIn',
 		];
 		for (let i = 0; i < animations.length; i++) {
-			document.body.innerHTML += '<div class="box" data-aoe="' + animations[i] + '">' + animations[i] + '</div>';
+			// document.body.innerHTML += '<div class="box" data-aoe="' + animations[i] + '">' + animations[i] + '</div>';
 		}
 		aoe();
 	</script>
