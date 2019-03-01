@@ -3,8 +3,12 @@
  * 
  * @description    "Animate On entrance (AOE) is a lightweight, dependency free, insanely fast scroll 
  * animation library built on top of Intersection Observer API",
+ * 
+ * project to match my needs, credits to https://github.com/mciastek/sal/
+ * 
+ * @TODO Rewrite as class
  * @author         Michał Gwóźdź - thesigner
- * @version        0.1
+ * @version        0.2
  */
 
 let options = {
@@ -21,7 +25,6 @@ let options = {
 	timing: null,
 	delay: null,
 	transitions: false,
-	disabled: false,
 	mutationsListener: null,
 	callback: null,
 };
@@ -32,6 +35,7 @@ let mutations;
 let ms = 'ms';
 let speed;
 let delay;
+let animation;
 
 /**
  * Init
@@ -53,7 +57,7 @@ const aoe = (settings) => {
 	}
 
 	// Create IntersectionObserver instance for each node
-	// Set css properties if passed in serrings
+	// Set css properties if passed in settings
 	items.forEach((item) => {
 		speed = (options.speed !== null) ? options.speed + ms : item.getAttribute(options.selectors.speed) + ms;
 		delay = (options.delay !== null) ? options.delay + ms : item.getAttribute(options.selectors.delay) + ms;
@@ -80,11 +84,26 @@ const createIntersection = (item) => {
 	let IntersectionConfig = {
 		root: options.root,
 		rootMargin: options.rootMargin,
-		// threshold: 1.0
+		threshold: 0.5,
 	};
 
 	observer = new IntersectionObserver(handleIntersect, IntersectionConfig);
 	observer.observe(item);
+};
+
+const animate = (item, animateIn) => {
+	console.log(animateIn);
+	animation = item.target.getAttribute(options.selectors.name);
+
+	if (item.intersectionRatio >= 0.5) {
+		item.target.classList.add(animation);
+	} else if (options.once != true) {
+		item.target.classList.remove(animation);
+	};
+
+	if (options.once == true) {
+		observer.unobserve(item.target);
+	}
 };
 
 /**
@@ -94,17 +113,16 @@ const createIntersection = (item) => {
  */
 const handleIntersect = (items) => { // (items, observer) => @todo consider using threshold so large elements can appear earlier
 	items.forEach((item) => {
-		let animation = item.target.getAttribute(options.selectors.name);
+		console.log(item.intersectionRatio);
+		if (item.isIntersecting == true) {
+			animate(item, true);
+		} else if (options.once != true) {
+			animate(item, false);
+		}
 
 		if (options.callback !== null) {
 			var call = options.callback;
 			call(item);
-		}
-
-		if (item.isIntersecting == true && options.disabled == false) {
-			item.target.classList.add(animation);
-		} else if (options.once != true) {
-			item.target.classList.remove(animation);
 		}
 	});
 };
