@@ -4,7 +4,7 @@ $animationSize: 100px;
 [data-aoe] {
 	animation-duration: $animationDuration;
 	animation-fill-mode: forwards;
-	opacity: 0;
+	animation-name: fadeOut;
 }
 
 @mixin disableIE {
@@ -22,6 +22,27 @@ $animationSize: 100px;
 	@include disableIE();
 }
 
+.fadeOut {
+	animation-name: fadeOut;
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	}
+
+	35% {
+		opacity: 0;
+		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	}
+
+	100% {
+		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+		opacity: 0;
+	}
+}
+
 .infinite {
 	animation-iteration-count: infinite;
 }
@@ -34,7 +55,6 @@ $animationSize: 100px;
 
 @keyframes pulsate {
 	0% {
-		animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		transform: scale3d(1, 1, 1);
 		opacity: 1;
 	}
@@ -44,7 +64,6 @@ $animationSize: 100px;
 	}
 
 	100% {
-		animation-timing-function: cubic-bezier(0.895, 0.03, 0.685, 0.22);
 		transform: scale3d(1, 1, 1);
 		opacity: 1;
 	}
@@ -52,7 +71,6 @@ $animationSize: 100px;
 
 .blink {
 	animation-name: blink;
-	animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
 }
 
 @keyframes blink {
@@ -1310,21 +1328,6 @@ $animationSize: 100px;
 	to {
 		opacity: 0;
 		transform: perspective(#{$animationSize}) rotateY(90deg) scale3d(1.2, 1.2, 1.2);
-	}
-}
-
-
-.fadeOut {
-	animation-name: fadeOut;
-	animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
-
-@keyframes fadeOut {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
 	}
 }
 
