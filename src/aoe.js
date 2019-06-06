@@ -25,7 +25,7 @@ class Aoe {
 	addAttributes() {
 		this.items.forEach((item) => {
 			let itemSpeed = item.getAttribute(this.options.selectors.speed) || this.options.speed + 'ms';
-			let itemDelay = item.getAttribute(this.options.selectors.delay) || this.options.speed + 'ms';
+			let itemDelay = item.getAttribute(this.options.selectors.delay) || this.options.delay + 'ms';
 
 			item.style.animationDuration = itemSpeed;
 			item.style.animationDelay = itemDelay;
@@ -58,45 +58,42 @@ class Aoe {
 	 * @param {IntersectionObserver} observers
 	 */
 	handleIntersect(observers) {
-		setTimeout(() => {
-			for (let i = 0; i < observers.length; i++) {
-				const observer = observers[i];
-				console.log(observer);
-				// animate element in viewport right after load
-				console.log(aoe.options);
-				if (aoe.options.initialized == false) {
-					if (observer.intersectionRatio == 1) {
-						// aoe.animateItem(observer.target, 'in');
-					}
-				}
+		const observer = observers[0];
 
-				// animate if in the middle of element is in the viewport
-				// @todo controlling ratios
-				// @todo am i checking to much?
-				if (observer.intersectionRatio >= 0.2 &&
-					observer.intersectionRatio <= 0.9 &&
-					observer.isIntersecting == true
-				) {
-					aoe.animateItem(observer.target, 'in');
-				}
-
-				// animate out when out of viewport top and bottom
-				if (aoe.options.once === false) {
-					if (observer.intersectionRatio >= 0 && observer.intersectionRatio <= 0.1) {
-						aoe.animateItem(observer.target, 'out');
-					}
-				}
-
-				// animate element right away if its higher than viewport and in viewport
-				if (observer.boundingClientRect.height > observer.boundingClientRect.y &&
-					observer.intersectionRatio > 0 &&
-					observer.intersectionRatio < 0.1) {
-					aoe.animateItem(observer.target, 'in');
-				}
+		// animate element in viewport right after load
+		if (aoe.options.initialized == false) {
+			if (observer.isIntersecting == true) {
+				aoe.animateItem(observer.target, 'in');
 			}
-		}, 300);
-		// mark app as initialized after first iteration
-		// aoe.options.initialized = true;
+		}
+
+		// animate if in the middle of element is in the viewport
+		// @todo controlling ratios
+		// @todo am i checking to much?
+		if (observer.intersectionRatio >= 0.2 &&
+			observer.intersectionRatio <= 0.9 &&
+			observer.isIntersecting == true
+		) {
+			aoe.animateItem(observer.target, 'in');
+		}
+
+		// animate out when out of viewport top and bottom
+		if (aoe.options.once === false &&
+			observer.boundingClientRect.height < observer.boundingClientRect.y
+		) {
+			if (observer.intersectionRatio >= 0 &&
+				observer.intersectionRatio <= 0.1
+			) {
+				aoe.animateItem(observer.target, 'out');
+			}
+		}
+
+		// animate element right away if its higher than viewport and in viewport
+		if (observer.boundingClientRect.height > observer.boundingClientRect.y &&
+			observer.intersectionRatio > 0 &&
+			observer.intersectionRatio < 0.1) {
+			aoe.animateItem(observer.target, 'in');
+		}
 	}
 
 	/**
@@ -106,7 +103,9 @@ class Aoe {
 	 */
 	animateItem(item, direction) {
 		let animationName = item.getAttribute('data-aoe');
-		return (direction === 'in') ? item.classList.add(animationName) : item.classList.remove(animationName);
+		return (direction === 'in') ?
+			item.classList.add(animationName) :
+			item.classList.remove(animationName);
 	}
 
 	/**
@@ -115,10 +114,12 @@ class Aoe {
 	 */
 	init(settings) {
 		if (!window.IntersectionObserver) {
+			// aoe elements will fade in from default opacity 0
 			document.body.classList.add('no-aoe');
 			console.warn('Your browser does not support IntersectionObserver! https://github.com/w3c/IntersectionObserver/tree/master/polyfill');
 			return;
 		}
+		// swap constructor settings with options
 		if (settings && settings !== this.options) {
 			this.options = {
 				...this.options,
@@ -126,6 +127,13 @@ class Aoe {
 			};
 		}
 		this.addAttributes();
+
+		// mark app as initialized so we omit first if in handleIntersect
+		// @todo need a better way
+		setTimeout(() => {
+			aoe.options.initialized = true;
+		}, 100);
 	}
 }
+// @todo czarek modul
 // export { Aoe as default }
