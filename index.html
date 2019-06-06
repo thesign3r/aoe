@@ -8,33 +8,46 @@
 	<title>aoe</title>
 	<link rel="stylesheet" href="dist/aoe.css">
 	<style>
-		.box {
-			margin: 0 auto;
-			width: 300px;
-			height: 300px;
-			margin-bottom: 10vh;
+		body {
+			margin: 0;
+			padding: 0;
+
+			overflow-x: hidden;
+		}
+
+		.aoes {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.aoe {
+			width: 15%;
+			height: 15vw;
+			margin: 2.5%;
 			background: #333333;
 			color: #fff;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 		}
+
+		.space {
+			height: 120vh;
+			display: block;
+			width: 100%;
+		}
 	</style>
 </head>
 
 <body>
+	<div class="space"></div>
+	<div class="aoes">
+
+	</div>
 	<script src="src/aoe.js"></script>
-	<div class="box"></div>
-	<div class="box"></div>
-	<div class="box"></div>
-	<div class="box"></div>
-	<div class="box" data-aoe="popIn">swoopInTop</div>
-	<div class="box"></div>
-	<div class="box"></div>
-	<div class="box"></div>
+
 	<script>
 		var animations = [
-			'fake',
 			'popIn',
 			'popInTop',
 			'popInBottom',
@@ -68,10 +81,16 @@
 			'rollIn',
 		];
 		for (let i = 0; i < animations.length; i++) {
-			// document.body.innerHTML += '<div class="box" data-aoe="' + animations[i] + '">' + animations[i] + '</div>';
+			document.querySelector('.aoes').innerHTML += '<div class="aoe" data-aoe="' + animations[i] + '">' + animations[
+				i] + '</div>';
 		}
-		aoe();
+		const aoe = new Aoe();
+		aoe.init({
+			shift: "40px",
+			once: false
+		});
 	</script>
+
 </body>
 
 </html>

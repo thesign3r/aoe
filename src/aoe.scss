@@ -1,25 +1,19 @@
-$animationDuration: 0.8s;
+$animationDuration: 0.7s;
 $animationSize: 100px;
 
 [data-aoe] {
 	animation-duration: $animationDuration;
 	animation-fill-mode: forwards;
-	animation-name: fadeOut;
+	animation-name: unset;
+	opacity: 0;
 }
 
-@mixin disableIE {
+.no-aoe {
 	[data-aoe] {
+		transition: opacity 0.4s ease-in;
 		opacity: 1 !important;
 		animation: none !important;
 	}
-}
-
-.safari {
-	@include disableIE();
-}
-
-@media screen and (max-width: 1023px) {
-	@include disableIE();
 }
 
 .fadeOut {
@@ -29,16 +23,9 @@ $animationSize: 100px;
 @keyframes fadeOut {
 	0% {
 		opacity: 1;
-		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
-	}
-
-	35% {
-		opacity: 0;
-		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 	}
 
 	100% {
-		animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 		opacity: 0;
 	}
 }
@@ -981,7 +968,7 @@ $animationSize: 100px;
 @keyframes swoopInBottom {
 	0% {
 		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-		transform: scaleY(1.5) translate3d(0, 250px, 0);
+		transform: scaleY(1.5) translate3d(0, -#{$animationSize}, 0);
 	}
 
 	40% {

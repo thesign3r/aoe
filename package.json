@@ -1,21 +1,41 @@
 {
-	"name": "thesigner",
-	"description": "core",
-	"srcPath": "src/",
-	"destPath": "build/",
-	"version": "1.0.0",
+	"name": "aoe",
+	"version": "2.0.0",
+	"description": "Animate On entrance (AOE) is a lightweight, dependency free, insanely fast scroll animation library built on top of Intersection Observer API",
+	"main": "src/aoe.js",
+	"browserslist": [
+		"last 1 version",
+		"> 1%",
+		"maintained node versions",
+		"not dead"
+	],
+	"dependencies": {
+		"gulp": "^4.0.1",
+		"gulp-sass": "^4.0.2",
+		"node-sass": "^4.12.0"
+	},
 	"devDependencies": {
-		"@babel/core": "^7.2.0",
-		"@babel/preset-env": "^7.2.0",
-		"gulp": "^3.9.1",
-		"gulp-autoprefixer": "^6.0.0",
+		"@babel/core": "^7.4.4",
+		"@babel/preset-env": "^7.4.4",
+		"gulp-autoprefixer": "^6.1.0",
 		"gulp-babel": "^8.0.0",
 		"gulp-concat": "^2.6.1",
-		"gulp-cssnano": "^2.1.2",
-		"gulp-sass": "^4.0.1",
-		"gulp-sourcemaps": "^2.6.0",
-		"gulp-uglify": "^3.0.0",
-		"gulp-util": "^3.0.8",
-		"npm-watch": "^0.3.0"
-	}
+		"gulp-csso": "^3.0.1",
+		"gulp-include": "^2.4.1",
+		"gulp-livereload": "^4.0.1",
+		"gulp-uglify": "^3.0.2"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/thesign3r/aoe.git"
+	},
+	"author": "thesigner",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/thesign3r/aoe/issues"
+	},
+	"homepage": "https://github.com/thesign3r/aoe#readme"
 }

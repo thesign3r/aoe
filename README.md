@@ -12,6 +12,7 @@ Combined with many **Included CSS3 animations** AOE aims to provice the fastest 
 - [check browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Browser_compatibility)
 - [and use a polyfill if you need one](https://github.com/w3c/IntersectionObserver/tree/master/polyfill)
 
+Aoe should fallback to simple fadeIn animation if browser doesn't support it.
 
 ## Table of Contents
 - [Installation](#install)
@@ -28,12 +29,33 @@ Make sure to **include both aoe.js and aoe.css**
 ```html
 <script src="dist/aoe.js"></script>
 ```
-Initialize **AOE** by calling:
-```js
-aoe();
 
-// or aoe({settings});
+```js
+const aoe = new Aoe();
+aoe.init();
 ```
+
+# Options
+
+You can set options during initialization:
+
+```js
+aoe({
+    speed: '1s',
+    delay: '300ms',
+	once: false,
+	shift: 
+});
+```
+
+| Property | Type | Description | Default  |
+|---------------------------|-------------|---------------|---------|
+| `speed` | String | Defines animation speed on all elements. eg. 1s | `null` |
+| `delay` | String | Defines animation delay on all elements. eg. 200ms | `null` |
+| `timing` | String | Defines css timing function on all elements eg. ease-in | `0px` |
+| `shift` | String | Shifs when element is going to be triggered. eg. 200px | `0px` |
+| `once` | Boolean | Defines if element should be animated every time it enters viewport. | `true` |
+| `selectors` | Object | Changes **AOE** selectors. See [src/aoe.js #5](https://github.com/thesign3r/aoe/blob/master/src/aoe.js). | `false` |
 
 # Usage
 Add `data-aoe` attribute to your desired HTML elements.
@@ -44,40 +66,10 @@ With **AOE** you can easily affect animation speed and delay on individual items
 Simply set proper `data` attribute:
 ```html
 <div 
-data-aoe-delay="300"
-data-aoe-speed="1000"
+data-aoe-delay="300ms"
+data-aoe-speed="1s"
 ></div>
 ```
-
-
-# Options
-
-You can set options during initialization:
-
-```js
-aoe({
-    speed: 1000,
-    delay: 300,
-    once: false,
-    transitions: false,
-    mutationsListener: document.getElementById('messages'),
-    disabled: false,
-});
-```
-
-| Property | Type | Description | Default  |
-|---------------------------|-------------|---------------|---------|
-| `speed` | Int | Defines animation speed on all elements. | `null` |
-| `delay` | Int | Defines animation delay on all elements. | `null` |
-| `once` | Boolean | Defines if animation should be played only once, and not when scrolling upwards. | `false` |
-| `transitions` | Boolean | Controls if AOE should also include transition **(not to be mistaken with animation)** speed/delay. | `false` |
-| `mutationsListener` | Node | This element (html wrapper) can listen for new elements with `data-aoe` attribute and automatically register new Intersection Observer on them. | `null` |
-| `disabled` | Boolean | Disables **AOE.** | `false` |
-| `selectors` | Object | Changes **AOE** selector. See [src/aoe.js #12](https://github.com/thesign3r/aoe/blob/master/src/aoe.js). | `false` |
-| `callback` | Function | Calls desired function when element enters/leaves viewport | `null` |
-
-
-
 
 # Animations
 **AOE** ships with many **fancy CSS3 animations**
@@ -128,17 +120,7 @@ With **AOE** you can easily add your own, custom animations.
     100% { opacity: 1; }
 }
 ```
-
-Or even transitions (transition speed can be changed directly through **AOE speed option** or css).
-```html
-<div data-aoe="CustomTransition"></div>
-```
-
-```css
-.CustomTransition {
-   opacity: 1;
-}
-```
+**Note:** You probably gonna need overflow-x: hidden on body / main
 
 ## License
 Created by [Michał Gwóźdź](https://github.com/thesign3r). Released under the [MIT License](https://github.com/thesign3r/aoe/blob/master/LICENSE).
