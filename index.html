@@ -80,15 +80,12 @@
 			'flipInY',
 			'rollIn',
 		];
-		for (let i = 0; i < animations.length; i++) {
-			document.querySelector('.aoes').innerHTML += '<div class="aoe" data-aoe="' + animations[i] + '">' + animations[
-				i] + '</div>';
+		for (let i = 0; i < 2; i++) {
+			document.querySelector('.aoes').innerHTML += '<div class="aoe" data-aoe-speed="1000" data-aoe="' + animations[i] + '">' + animations[
+				i] + '</div><div class="space"></div>';
 		}
 		const aoe = new Aoe();
 		aoe.init({
-			shift: "40px",
-			once: false,
-			speed: 2000
 		});
 	</script>
 

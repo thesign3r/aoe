@@ -1,42 +1,41 @@
 class Aoe {
 	constructor() {
 		this.options = {
-			initialized: false,
-			selectors: {
-				name: 'data-aoe',
-				main: '[data-aoe]',
-				speed: 'data-aoe-speed',
+			attributes: {
 				delay: 'data-aoe-delay',
+				speed: 'data-aoe-speed'
 			},
-			root: null,
-			shift: "0px",
-			threshold: [0, 0.5, 1],
+			observer: {
+				root: null,
+				threshold: [0, 0.5],
+				shift: "0px"
+			},
 			once: true,
 			speed: null,
-			timing: null,
 			delay: null,
-		}
-		this.items = document.querySelectorAll(this.options.selectors.main);
+			timing: null,
+		};
+		this.items = document.querySelectorAll('[data-aoe]');
+	}
+
+	/**
+	 *  Create observer and set el attributes
+	 */
+	begin() {
+		this.items.forEach((item) => {
+			this.setAttributes(item);
+			this.createObserver(item);
+		});
 	}
 
 	/**
 	 *  Set element speed/delay based on data-attr or/and options
+	 * @param {Node} item 
 	 */
-	addAttributes() {
-		this.items.forEach((item) => {
-			let itemSpeed = item.getAttribute(this.options.selectors.speed) || this.options.speed + 'ms';
-			let itemDelay = item.getAttribute(this.options.selectors.delay) || this.options.delay + 'ms';
-
-			item.style.animationDuration = itemSpeed;
-			item.style.animationDelay = itemDelay;
-
-			if (this.options.timing !== null) {
-				item.style.animationTimingFunction = this.options.timing;
-			}
-
-			// Create IntersectionObserver instance for each node
-			this.createObserver(item);
-		});
+	setAttributes(item) {
+		let duration = item.style.animationDuration = (item.getAttribute(this.options.attributes.speed) || this.options.speed) + 'ms';
+		let delay = item.style.animationDelay = (item.getAttribute(this.options.attributes.delay) || this.options.delay) + 'ms';
+		let timing = item.style.animationTimingFunction = this.options.timing;
 	}
 
 	/**
@@ -45,11 +44,11 @@ class Aoe {
 	 */
 	createObserver(item) {
 		let intersectionConfig = {
-			root: this.options.root,
-			rootMargin: this.options.shift,
-			threshold: this.options.threshold,
+			root: this.options.observer.root,
+			rootMargin: this.options.observer.shift,
+			threshold: this.options.observer.threshold,
 		};
-		let observer = new IntersectionObserver(this.handleIntersect, intersectionConfig);
+		let observer = new IntersectionObserver(this.handleIntersect.bind(this), intersectionConfig);
 		observer.observe(item);
 	}
 
@@ -58,48 +57,22 @@ class Aoe {
 	 * @param {IntersectionObserver} observers
 	 */
 	handleIntersect(observers) {
-		const observer = observers[0];
-
-		// animate element in viewport right after load
-		if (aoe.options.initialized == false) {
-			if (observer.isIntersecting == true) {
-				aoe.animateItem(observer.target, 'in');
+		observers.forEach(observer => {
+			console.log(observer);
+			if (observer.intersectionRatio > 0.5) {
+				this.animateItem(observer.target, 'in');
 			}
-		}
 
-		// animate if in the middle of element is in the viewport
-		// @todo controlling ratios
-		// @todo am i checking to much?
-		if (observer.intersectionRatio >= 0.2 &&
-			observer.intersectionRatio <= 0.9 &&
-			observer.isIntersecting == true
-		) {
-			aoe.animateItem(observer.target, 'in');
-		}
-
-		// animate out when out of viewport top and bottom
-		if (aoe.options.once === false &&
-			observer.boundingClientRect.height < observer.boundingClientRect.y
-		) {
-			if (observer.intersectionRatio >= 0 &&
-				observer.intersectionRatio <= 0.1
-			) {
-				aoe.animateItem(observer.target, 'out');
+			if (observer.intersectionRatio == 0 && this.options.once == false) {
+				this.animateItem(observer.target, 'out');
 			}
-		}
-
-		// animate element right away if its higher than viewport and in viewport
-		if (observer.boundingClientRect.height > observer.boundingClientRect.y &&
-			observer.intersectionRatio > 0 &&
-			observer.intersectionRatio < 0.1) {
-			aoe.animateItem(observer.target, 'in');
-		}
+		});
 	}
 
 	/**
 	 * 
 	 * @param {Node} item 
-	 * @param {string} direction 
+	 * @param {String} direction 
 	 */
 	animateItem(item, direction) {
 		let animationName = item.getAttribute('data-aoe');
@@ -110,30 +83,25 @@ class Aoe {
 
 	/**
 	 * Init app and swap settings
-	 * @param {object} settings 
+	 * @param {Object} settings 
 	 */
 	init(settings) {
 		if (!window.IntersectionObserver) {
-			// aoe elements will fade in from default opacity 0
+			// disable animations and fade element in if somethings not right
 			document.body.classList.add('no-aoe');
 			console.warn('Your browser does not support IntersectionObserver! https://github.com/w3c/IntersectionObserver/tree/master/polyfill');
 			return;
 		}
-		// swap constructor settings with options
+
+		// Swap constructor settings with options
 		if (settings && settings !== this.options) {
 			this.options = {
 				...this.options,
 				...settings,
 			};
 		}
-		this.addAttributes();
 
-		// mark app as initialized so we omit first if in handleIntersect
-		// @todo need a better way
-		setTimeout(() => {
-			aoe.options.initialized = true;
-		}, 100);
+
+		this.begin();
 	}
 }
-// @todo czarek modul
-// export { Aoe as default }
