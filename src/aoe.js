@@ -1,4 +1,6 @@
-class Aoe {
+import './aoe.scss';
+
+export default class Aoe {
 	constructor() {
 		this.options = {
 			attributes: {
@@ -15,6 +17,7 @@ class Aoe {
 			delay: null,
 			timing: null,
 		};
+		this.currentAnimation = null;
 		this.items = document.querySelectorAll('[data-aoe]');
 	}
 
@@ -58,7 +61,6 @@ class Aoe {
 	 */
 	handleIntersect(observers) {
 		observers.forEach(observer => {
-			console.log(observer);
 			if (observer.intersectionRatio > 0.5) {
 				this.animateItem(observer.target, 'in');
 			}
@@ -75,10 +77,10 @@ class Aoe {
 	 * @param {String} direction 
 	 */
 	animateItem(item, direction) {
-		let animationName = item.getAttribute('data-aoe');
+		this.currentAnimation = item.getAttribute('data-aoe');
 		return (direction === 'in') ?
-			item.classList.add(animationName) :
-			item.classList.remove(animationName);
+			item.classList.add(this.currentAnimation) :
+			item.classList.remove(this.currentAnimation);
 	}
 
 	/**
