@@ -1,41 +1,38 @@
 {
-	"name": "aoe",
-	"version": "2.0.0",
-	"description": "Animate On entrance (AOE) is a lightweight, dependency free, insanely fast scroll animation library built on top of Intersection Observer API",
-	"main": "src/aoe.js",
-	"browserslist": [
-		"last 1 version",
-		"> 1%",
-		"maintained node versions",
-		"not dead"
-	],
-	"dependencies": {
-		"gulp": "^4.0.1",
-		"gulp-sass": "^4.0.2",
-		"node-sass": "^4.12.0"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.4.4",
-		"@babel/preset-env": "^7.4.4",
-		"gulp-autoprefixer": "^6.1.0",
-		"gulp-babel": "^8.0.0",
-		"gulp-concat": "^2.6.1",
-		"gulp-csso": "^3.0.1",
-		"gulp-include": "^2.4.1",
-		"gulp-livereload": "^4.0.1",
-		"gulp-uglify": "^3.0.2"
-	},
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/thesign3r/aoe.git"
-	},
-	"author": "thesigner",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/thesign3r/aoe/issues"
-	},
-	"homepage": "https://github.com/thesign3r/aoe#readme"
+  "name": "aoejs",
+  "version": "2.0.0",
+  "description": "Animate On entrance (AOE) is a lightweight, dependency free, insanely fast scroll animation library built on top of Intersection Observer API",
+  "main": "src/aoe.js",
+  "dependencies": {
+    "src": "^1.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "autoprefixer": "^9.6.1",
+    "cssnano": "^4.1.10",
+    "parcel-bundler": "^1.12.3",
+    "posthtml-include": "^1.3.2",
+    "sass": "^1.22.9"
+  },
+  "scripts": {
+    "dev": "parcel dev/index.html --open",
+    "build": "rm -rf dist && parcel build src/aoe.js && parcel build src/aoe-standalone.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thesign3r/aoe.git"
+  },
+  "author": "thesign3r",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thesign3r/aoe/issues"
+  },
+  "homepage": "https://github.com/thesign3r/aoe#readme",
+  "keywords": [
+    "scroll",
+    "animation",
+    "viewport",
+    "intersetion"
+  ]
 }
