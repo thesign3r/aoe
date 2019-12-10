@@ -3,8 +3,6 @@ Animate On entrance **(AOE)** is a lightweight, dependency free, insanely fast s
 
 Combined with many **Included CSS3 animations** AOE aims to provice the fastest possible solution for animating elements as they appear in users viewport.
 
-**AOE** comes with Mutation Observer, so it can listen for new elements and automatically register new Intersection Observer.
-
 ## Table of Contents
 - [Overview](#overview)
 	- [Table of Contents](#table-of-contents)
@@ -138,7 +136,6 @@ With **AOE** you can easily add your own, custom animations.
 - [and use a polyfill if you need one](https://github.com/w3c/IntersectionObserver/tree/master/polyfill)
 
 Aoe should fallback to simple fadeIn animation if browser doesn't support it.
-
 
 ## License
 Created by [Michał Gwóźdź](https://github.com/thesign3r). Released under the [ISC License](https://github.com/thesign3r/aoe/blob/master/LICENSE).
