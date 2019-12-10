@@ -15,7 +15,7 @@ Combined with many **Included CSS3 animations** AOE aims to provice the fastest 
 - [Options](#options)
 - [Usage](#usage)
 - [Animations](#animations)
-	- [License](#license)
+- [License](#license)
 
 ## [View the demo](https://thesigner.pl/aoe)
 
