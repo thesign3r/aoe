@@ -97,10 +97,9 @@ export default class Aoe {
 
 		// Swap constructor settings with options
 		if (settings && settings !== this.options) {
-			this.options = {
-				...this.options,
-				...settings,
-			};
+			for (var key in settings) {
+				this.options[key] = settings[key];
+			}
 		}
 
 

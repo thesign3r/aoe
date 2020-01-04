@@ -33,7 +33,7 @@ var animations = [
 	'rollIn',
 ];
 for (let i = 0; i < animations.length; i++) {
-	document.querySelector('.aoes').insertAdjacentHTML('afterBegin',`<div class="aoe" data-aoe="${animations[i]}"> ${animations[i]}</div><div class="space"></div>`)
+	document.querySelector('.aoes').insertAdjacentHTML('afterBegin', `<div class="aoe" data-aoe="${animations[i]}"> ${animations[i]}</div><div class="space"></div>`)
 }
 
 // init aoe
