@@ -57,7 +57,12 @@ aoe.init({
     speed: 1000,
     delay: 100,
 	once: false,
-	shift: '20px'
+	shift: '20px',
+	observer: {
+		threshold: [0, 0.5],
+		shift: "0px",
+		intersectionRatio: 0.5
+	},
 });
 ```
 
@@ -66,8 +71,10 @@ aoe.init({
 | `speed` | Int | Defines animation speed on all elements. eg. 1s | `null` |
 | `delay` | Int | Defines animation delay on all elements. eg. 200ms | `null` |
 | `timing` | String | Defines css timing function on all elements eg. ease-in | `null` |
-| `shift` | String | Shifs when element is going to be triggered. eg. 200px | `0px` |
 | `once` | Boolean | Defines if element should be animated every time it enters viewport. | `true` |
+| `observer.shift` | String | Shifs when element is going to be triggered. eg. 200px | `0px` |
+| `observer.threshold` | Array | A threshold of 1.0 means that when 100% of the target is visible within the element specified by the root. | `[0, 0.5]` |
+| `observer.intersectionRatio` | Float | intersectionRatio property tells you how much of the target element is currently visible within the root's intersection ratio, as a value between 0.0 and 1.0. | `0.5` |
 
 # Usage
 Add `data-aoe` attribute to your desired HTML elements.
