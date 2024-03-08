@@ -12,6 +12,7 @@ export default class Aoe {
 				threshold: [0, 0.5],
 				shift: "0px"
 			},
+			intersectionRatio: 0.5,
 			once: true,
 			speed: null,
 			delay: null,
@@ -61,7 +62,7 @@ export default class Aoe {
 	 */
 	handleIntersect(observers) {
 		observers.forEach(observer => {
-			if (observer.intersectionRatio > 0.5) {
+			if (observer.intersectionRatio > this.options.intersectionRatio) {
 				this.animateItem(observer.target, 'in');
 			}
 
