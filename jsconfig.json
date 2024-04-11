@@ -1,8 +1,0 @@
-{
-	"exclude": [
-		"src/assets/js/vendor/three",
-		"**/node_modules",
-		"wp-admin",
-		"wp-includes"
-	]
-}
