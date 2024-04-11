@@ -5,7 +5,9 @@ Elevate your web projects to the next level with **aoejs** – the ultimate anim
 
 With customizable options and a collection of pre-built CSS3 animations, **aoejs** is your go-to solution for captivating user experiences. Say hello to dynamic web design with **aoejs**!
 
+## [View the demo](https://thesigner.dev/aoe)
 
+---
 ## Table of Contents
 - [Overview](#overview)
 	- [Table of Contents](#table-of-contents)
@@ -18,7 +20,6 @@ With customizable options and a collection of pre-built CSS3 animations, **aoejs
 - [Animations](#animations)
 - [License](#license)
 
-## [View the demo](https://thesigner.dev/aoe)
 
 # Install
 
