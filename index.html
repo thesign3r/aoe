@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="spacing"></div>
+    <div class="animation" data-aoe="fadeIn">fadeIn</div>
+    
+    <div class="spacing"></div>
+
+  </div>
+  <script type="module" src="/dev.js"></script>
+  <style>
+    .scroll {
+      background: #ccc;
+      height: 600px;
+      overflow: auto;
+    }
+
+    .spacing {
+      height: 2000px;
+    }
+
+    .animation {
+      background: #000;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+    }
+
+    .animation.fadeIn {
+      background: red;
+    }
+
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</body>
+
+</html>

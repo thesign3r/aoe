@@ -1,16 +1,19 @@
-# Overview
-Animate On entrance **(AOE)** is a lightweight, dependency free, insanely fast scroll animation library built on top of Intersection Observer API.
+# aoejs
+Elevate your web projects to the next level with **aoejs** – the ultimate animation companion.
 
-Combined with many **Included CSS3 animations** AOE aims to provice the fastest possible solution for animating elements as they appear in users viewport.
+**aoejs** empowers you to effortlessly add stunning animations to elements as they gracefully enter and exit the viewport. Crafted with simplicity and performance in mind, this lightweight package leverages the power of the Intersection Observer API for seamless integration and blazing-fast animations.
+
+With customizable options and a collection of pre-built CSS3 animations, **aoejs** is your go-to solution for captivating user experiences. Say hello to dynamic web design with **aoejs**!
+
 
 ## Table of Contents
 - [Overview](#overview)
 	- [Table of Contents](#table-of-contents)
 	- [View the demo](#view-the-demo)
 - [Install](#install)
-		- [As npm package](#as-npm-package)
-		- [Standalone](#standalone)
+	- [npm package](#as-npm-package)
 - [Options](#options)
+- [Methods](#methods)
 - [Usage](#usage)
 - [Animations](#animations)
 - [License](#license)
@@ -37,16 +40,6 @@ const aoe = new Aoe();
 aoe.init();
 ```
 
----
-### Standalone
-```html
-<script src="dist/aoe-standalone.js"></script>
-```
-
-```js
-const aoe = new Aoe();
-aoe.init();
-```
 
 # Options
 
@@ -54,20 +47,66 @@ You can set options during initialization:
 
 ```js
 aoe.init({
-    speed: 1000,
-    delay: 100,
-	once: false,
-	shift: '20px'
+  attributes: {
+    dataset: "data-aoe",
+    delay: "data-aoe-delay",
+    speed: "data-aoe-speed",
+  },
+  observerRoot: null,
+  observeRootMargin: "0px",
+  observerThreshold: [0, 0.5, 0.75, 1],
+  intersectionRatio: 0.5,
+  once: false,
+  speed: 1500,
+  delay: 0,
+  timingFunction: 'linear',
 });
 ```
 
 | Property | Type | Description | Default  |
 |---------------------------|-------------|---------------|---------|
-| `speed` | Int | Defines animation speed on all elements. eg. 1s | `null` |
-| `delay` | Int | Defines animation delay on all elements. eg. 200ms | `null` |
+| `once` | Boolean | Defines if element should be animated every time it enters viewport. | `false` |
+| `speed` | Int | Defines animation speed on all elements - in ms | `null` |
+| `delay` | Int | Defines animation delay on all elements - in ms | `null` |
 | `timing` | String | Defines css timing function on all elements eg. ease-in | `null` |
-| `shift` | String | Shifs when element is going to be triggered. eg. 200px | `0px` |
-| `once` | Boolean | Defines if element should be animated every time it enters viewport. | `true` |
+| **`intersectionRatio`** | Node | **Tells how much of the target element needs to be visible within the root's intersection ratio in order to trigger animation** | `0.5` |
+| `observerRoot` | Node | [root](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#root) | `null/document` |
+| `observeRootMargin` | string | [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#rootmargin) | `0px` |
+| `observerThreshold` | number/array | [threshold](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#threshold) | `[0, 0.5, 1]` |
+| `attributes.dataset` | String | You can change the data-aoe="" into data-custom="" | `null` |
+| `attributes.delay` | String | You can change the data-aoe-delay="" into custom-property-delay="" | `null` |
+| `attributes.speed` | String | You can change the data-aoe-speed="" into custom-property-speed="" | `null` |
+
+
+# Methods
+Set callback for when element enters viewport
+
+```js
+const aoe = new Aoe();
+aoe.init();
+
+aoe.onEnter((entry) => {
+  console.log("Element entered viewport:", entry.target);
+});
+
+```
+Set callback for when element leaves viewport
+```js
+const aoe = new Aoe();
+aoe.init();
+
+aoe.onLeave((entry) => {
+  console.log("Element left viewport:", entry.target);
+});
+```
+
+Disconnect all observers
+```js
+const aoe = new Aoe();
+aoe.init();
+
+aoe.disconnectObservers();
+```
 
 # Usage
 Add `data-aoe` attribute to your desired HTML elements.
@@ -75,9 +114,13 @@ Add `data-aoe` attribute to your desired HTML elements.
 <div data-aoe="popIn"></div>
 ```
 With **AOE** you can easily affect animation speed and delay on individual items.
-Simply set proper `data` attribute:
+
+Simply add speed/delay into `data-aoe` attribute (in miliseconds):
 ```html
-<div data-aoe-delay="300" data-aoe-speed="100"></div>
+<div data-aoe="popIn:1000:2000"></div>
+<div data-aoe="popIn:duration:delay"></div>
+<!-- or separately -->
+<div data-aoe="popIn" data-aoe-delay="300" data-aoe-speed="100"></div>
 ```
 
 # Animations
@@ -120,22 +163,28 @@ With **AOE** you can easily add your own, custom animations.
 ```
 
 ```css
-.CustomAnimation {
-    animation-name: animation;
-}
-
-@keyframes animation {
+@keyframes CustomAnimation {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
+
+.CustomAnimation {
+    animation-name: CustomAnimation;
+}
 ```
+
+
+
 **Note:** You probably gonna need overflow-x: hidden on body / main
 
-**Note:** Intersection Observer API does not work on older browsers! Make sure to:
-- [check browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Browser_compatibility)
-- [and use a polyfill if you need one](https://github.com/w3c/IntersectionObserver/tree/master/polyfill)
+**Note:** Intersection Observer API does not work very old browsers!
+Make sure to:
+- [check browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#Browser_compatibility) [97.02% coverage]
+- if you ever need one - [use polyfill](https://www.npmjs.com/package/intersection-observer-polyfill)
 
 Aoe should fallback to simple fadeIn animation if browser doesn't support it.
 
 ## License
 Created by [Michał Gwóźdź](https://github.com/thesign3r). Released under the [ISC License](https://github.com/thesign3r/aoe/blob/master/LICENSE).
+
+Author website: [thesigner.dev](https://thesigner.dev)

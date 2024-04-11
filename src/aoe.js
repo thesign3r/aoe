@@ -1,109 +1,149 @@
-import './aoe.scss';
+import "./aoe.scss";
 
 export default class Aoe {
-	constructor() {
-		this.options = {
-			attributes: {
-				delay: 'data-aoe-delay',
-				speed: 'data-aoe-speed'
-			},
-			observer: {
-				root: null,
-				threshold: [0, 0.5],
-				shift: "0px"
-			},
-			intersectionRatio: 0.5,
-			once: true,
-			speed: null,
-			delay: null,
-			timing: null,
-		};
-		this.currentAnimation = null;
-		this.items = document.querySelectorAll('[data-aoe]');
-	}
+  constructor() {
+    this.options = {
+      attributes: {
+        dataset: "data-aoe",
+        delay: "data-aoe-delay",
+        speed: "data-aoe-speed",
+      },
+      observerRoot: null,
+      observeRootMargin: "0px",
+      observerThreshold: [0, 0.5, 1],
+      intersectionRatio: 0.5,
+      once: false,
+      speed: null,
+      delay: null,
+      qwe: "qwe",
+      timingFunction: null,
+    };
+    this.items = [];
+    this.observers = [];
+    this.onEnterCallback = null;
+    this.onLeaveCallback = null;
+  }
 
-	/**
-	 *  Create observer and set el attributes
-	 */
-	begin() {
-		this.items.forEach((item) => {
-			this.setAttributes(item);
-			this.createObserver(item);
-		});
-	}
+  /**
+   * Sets element animation attributes based on data attributes or options
+   * @param {Node} item - The element to set attributes for
+   */
+  setAttributes(item) {
+    const dataset = item.getAttribute(this.options.attributes.dataset);
+    const attributes = dataset.split(":");
+    const duration =
+      attributes[1] || item.getAttribute(this.options.attributes.speed);
+    const delay =
+      attributes[2] || item.getAttribute(this.options.attributes.delay);
 
-	/**
-	 *  Set element speed/delay based on data-attr or/and options
-	 * @param {Node} item 
-	 */
-	setAttributes(item) {
-		let duration = item.style.animationDuration = (item.getAttribute(this.options.attributes.speed) || this.options.speed) + 'ms';
-		let delay = item.style.animationDelay = (item.getAttribute(this.options.attributes.delay) || this.options.delay) + 'ms';
-		let timing = item.style.animationTimingFunction = this.options.timing;
-	}
+    item.style.animationDuration = `${duration || this.options.speed}ms`;
+    item.style.animationDelay = `${delay || this.options.delay}ms`;
+    item.style.animationTimingFunction = this.options.timingFunction;
+  }
 
-	/**
-	 * Creates Intersection Observer instance on element
-	 * @param {Node} item
-	 */
-	createObserver(item) {
-		let intersectionConfig = {
-			root: this.options.observer.root,
-			rootMargin: this.options.observer.shift,
-			threshold: this.options.observer.threshold,
-		};
-		let observer = new IntersectionObserver(this.handleIntersect.bind(this), intersectionConfig);
-		observer.observe(item);
-	}
+  /**
+   * Creates Intersection Observer instance for each element
+   * @param {Node} item - The element to observe
+   */
+  createObserver(item) {
+    const intersectionConfig = {
+      root: this.options.observerRoot,
+      rootMargin: this.options.observeRootMargin,
+      threshold: this.options.observerThreshold,
+    };
+    const observer = new IntersectionObserver(
+      this.handleIntersect.bind(this),
+      intersectionConfig
+    );
+    observer.observe(item);
+    this.observers.push(observer);
+  }
 
-	/**
-	 * Handles Intersection Observer 
-	 * @param {IntersectionObserver} observers
-	 */
-	handleIntersect(observers) {
-		observers.forEach(observer => {
-			if (observer.intersectionRatio > this.options.intersectionRatio) {
-				this.animateItem(observer.target, 'in');
-			}
+  /**
+   * Sets the callback function to be called when an element enters the viewport
+   * @param {Function} callback - The function to be called on element enter
+   */
+  onEnter(callback) {
+    this.onEnterCallback = callback;
+  }
 
-			if (observer.intersectionRatio == 0 && this.options.once == false) {
-				this.animateItem(observer.target, 'out');
-			}
-		});
-	}
+  /**
+   * Sets the callback function to be called when an element leaves the viewport
+   * @param {Function} callback - The function to be called on element leave
+   */
+  onLeave(callback) {
+    this.onLeaveCallback = callback;
+  }
 
-	/**
-	 * 
-	 * @param {Node} item 
-	 * @param {String} direction 
-	 */
-	animateItem(item, direction) {
-		this.currentAnimation = item.getAttribute('data-aoe');
-		return (direction === 'in') ?
-			item.classList.add(this.currentAnimation) :
-			item.classList.remove(this.currentAnimation);
-	}
+  /**
+   * Handles Intersection Observer events
+   * @param {IntersectionObserverEntry[]} entries - Array of observer entries
+   */
+  handleIntersect(entries) {
+    entries.forEach((entry) => {
+      if (
+        entry.isIntersecting &&
+        entry.intersectionRatio >= this.options.intersectionRatio
+      ) {
+        this.animateItem(entry.target, "in");
+        if (this.onEnterCallback) {
+          this.onEnterCallback(entry);
+        }
+      } else if (!entry.isIntersecting && !this.options.once) {
+        this.animateItem(entry.target, "out");
+        if (this.onLeaveCallback) {
+          this.onLeaveCallback(entry);
+        }
+      }
+    });
+  }
 
-	/**
-	 * Init app and swap settings
-	 * @param {Object} settings 
-	 */
-	init(settings) {
-		if (!window.IntersectionObserver) {
-			// disable animations and fade element in if somethings not right
-			document.body.classList.add('no-aoe');
-			console.warn('Your browser does not support IntersectionObserver! https://github.com/w3c/IntersectionObserver/tree/master/polyfill');
-			return;
-		}
+  /**
+   * Animates the element based on direction
+   * @param {Node} item - The element to animate
+   * @param {String} direction - The direction of animation ('in' or 'out')
+   */
+  animateItem(item, direction) {
+    const animationName = item.dataset.aoe.split(":")[0];
+    if (direction === "in") {
+      item.classList.add(animationName);
+    } else {
+      item.classList.remove(animationName);
+    }
+  }
 
-		// Swap constructor settings with options
-		if (settings && settings !== this.options) {
-			for (var key in settings) {
-				this.options[key] = settings[key];
-			}
-		}
+  /**
+   * Initializes the AOE library with optional settings
+   * @param {Object} settings - Optional settings to override defaults
+   */
+  init(settings) {
+    if (!window.IntersectionObserver) {
+      document.body.classList.add("no-aoe");
+      console.warn(
+        "Your browser does not support IntersectionObserver! Please consider using a polyfill."
+      );
+      return;
+    }
 
+    // Merge constructor settings with provided options
+    if (settings && settings !== this.options) {
+      Object.assign(this.options, settings);
+    }
 
-		this.begin();
-	}
+    // Store items and set attributes
+    this.items = document.querySelectorAll(
+      `[${this.options.attributes.dataset}]`
+    );
+    this.items.forEach((item) => {
+      this.setAttributes(item);
+      this.createObserver(item);
+    });
+  }
+
+  /**
+   * Disconnects all observers
+   */
+  disconnectObservers() {
+    this.observers.forEach((observer) => observer.disconnect());
+  }
 }
